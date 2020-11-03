@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './assets/fonts/Questrial-Regular.ttf';
 import App from './containers/App/App';
 import * as serviceWorker from './serviceWorker';
 import axios from 'axios';
