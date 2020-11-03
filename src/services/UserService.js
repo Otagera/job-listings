@@ -55,6 +55,7 @@ class UserService {
 		if(axios.defaults.baseURL === 'http://127.0.0.1:3001/api'){
 			return axios.defaults.baseURL + '/' + img;
 		}
+		return img;
 	}
 }
 export default new UserService();
