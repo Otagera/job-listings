@@ -11,7 +11,17 @@
     box-sizing: border-box;
     transition: all 0.3s ease-out;
 }
-
+.Successfull {
+    border: 2px solid hsl(180, 52%, 96%);
+    border-radius: 5px;
+    background-color: hsl(180, 29%, 50%);
+}
+.Successfull button{
+    background-color: hsl(180, 52%, 96%);
+    outline: none;
+    border: none;
+    cursor: pointer; 
+}
 @media (min-width: 600px) {
     .Modal {
         width: 500px;

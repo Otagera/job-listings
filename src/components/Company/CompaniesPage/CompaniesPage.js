@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom'
 
 import Aux from '../../../hoc/Auxillary/Auxillary';
 import Search from './Search/Search';
@@ -9,19 +10,24 @@ import UserService from '../../../services/UserService';
 class CompaniesPage extends Component{
 	state = {
         companies: [],
-    	error: false
+    	error: false,
+        empty: false
     }
 
     getCompanies = ()=>{
         UserService.getCompanies()
                     .then(response=>{
                        let companies = response.data.companies;
-                       UserService.updateImgURL();
                         companies.forEach((company)=>{
                             company.img = UserService.updateImgURL(company.img);
                         });
+                        let empty = (companies.length <= 0)? true: false;
 
-                       this.setState({ companies: companies, error: false });
+                        this.setState({
+                            companies: companies,
+                            error: false,
+                            empty: empty
+                        });
                     }, error=>{
                         console.log('Error ' + error);
                         this.setState({ error: true });
@@ -32,22 +38,21 @@ class CompaniesPage extends Component{
         this.getCompanies();
     }
 	render(){
-        let whatToDisplayListing = <Loader />;
+        let whatToDisplayCompany = <Loader />;
         if(this.state.companies.length > 0){
-            whatToDisplayListing = (
+            whatToDisplayCompany = (
                 <Companies
-                    error={this.props.error}
-                    availableCompanies={this.state.companies}
-                    tagClicked={this.props.tagClicked} />
+                    error={this.state.error}
+                    availableCompanies={this.state.companies} />
                 );
         }
 		return (
 			<Aux>			
 				<Search
 					clearClicked={this.props.clearClicked} />
-				{whatToDisplayListing}
+				{whatToDisplayCompany}
 			</Aux>
 		);
 	}
 }
-export default CompaniesPage;
+export default withRouter(CompaniesPage);

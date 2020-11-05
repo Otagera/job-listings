@@ -135,6 +135,14 @@ class Main extends Component {
                                 <Redirect to='/' />
                             );
                         }} />
+                    <Route
+                        path='/deleteCompany'
+                        exact
+                        component={()=>{
+                            return(
+                                <Redirect to='/companies' />
+                            );
+                        }} />
                     <Route render={()=> <h1>Not Found</h1>} />
                 </Switch>
 			</Aux>

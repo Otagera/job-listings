@@ -227,6 +227,7 @@ $color: rgba(1,1,1, .33);
 	.SearchLeft {
 		display: flex;
 		flex-direction: row;
+		flex-wrap: wrap;
 	}
 	.SearchRight p{
 		margin: 0;
@@ -238,6 +239,9 @@ $color: rgba(1,1,1, .33);
 	.SearchRight p:active {
 		cursor: pointer;
 		text-decoration: underline;
+	}
+	@media (max-width: 500px) {
+		
 	}
 }
 

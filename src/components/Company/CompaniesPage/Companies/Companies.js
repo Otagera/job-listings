@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 
 import Loader from '../../../UI/Loader/Loader';
 import Company from './Company/Company';
@@ -14,6 +14,7 @@ class Companies extends Component{
     handleDeleteCompany = (tempFakeId)=>{
         UserService.deleteCompany(tempFakeId)
                     .then(response=>{
+                    	//console.log(response);
                         this.setState({ redirect: true });
                     }, error=>{
                         console.log('Error ' + error);
@@ -21,22 +22,26 @@ class Companies extends Component{
                     });
     }
     render(){
-		let companies = this.props.availableCompanies.map((company)=>{
-			return (<Company
-						company={company}
-						key={company.fakeId}
-						deleteCompanyClicked={()=> this.handleDeleteCompany(company.fakeId)} />
-				);
-		});
 		let redirect = null;
-		if(this.props.error){
+		let companies = <Loader />;
+
+		if(this.props.availableCompanies.length > 0){
+			companies = this.props.availableCompanies.map((company)=>{
+				return (<Company
+							company={company}
+							key={company.fakeId}
+							deleteCompanyClicked={()=> this.handleDeleteCompany(company.fakeId)} />
+					);
+			});
+		}else {
+			companies = <p>No Companies Please Add a New Company!</p>;
+		}
+		if(this.props.error || this.state.error){
 			companies = <p>Something went wrong</p>
 		}
-		if(this.props.availableCompanies.length < 0){
-			companies = <Loader />;
-		}
 		if(this.state.redirect){
-			redirect = <Redirect to='/companies' />;
+			//this.props.history.go(0);
+			redirect = <Redirect to='/deleteCompany' />;
 		}
 		return (
 			<div className='Companies'>
@@ -46,4 +51,4 @@ class Companies extends Component{
 		);
     }
 }
-export default Companies;
+export default withRouter(Companies);

@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import FormValidation from '../../services/FormValidation.js';
 import InputGroup from '../UI/InputGroup/InputGroup';
 import AuthService from '../../services/AuthService.js';
+import Modal from '../UI/Modal/Modal';
 
 class Register extends Component {
     state = {
@@ -47,7 +48,8 @@ class Register extends Component {
 		form: React.createRef(),
 		submitted: false,
 		error: false,
-    	formIsValid: false
+    	formIsValid: false,
+        showSuccessInfo: false
     }
     handleShowPassword = (name)=>{
 		let formData = { ...this.state.formData };
@@ -80,10 +82,16 @@ class Register extends Component {
 
         AuthService.login(fd).then(response=>{
             //console.log(response);
-    		this.setState({ submitted: true });
+            this.setState({ showSuccessInfo: true });
         }, error=>{
             //console.log(error);
     		this.setState({ error: true });
+        });
+    }
+    removeModal = ()=>{
+        this.setState({
+            showSuccessInfo: false,
+            submitted: true
         });
     }
 
@@ -124,9 +132,18 @@ class Register extends Component {
 							handleShowPassword={this.handleShowPassword} />
 						)
 					)
-				}
+				}                
+                <Modal
+                    show={this.state.showSuccessInfo}
+                    modalClosed={this.removeModal}
+                    successfull={true}>
+                    <div>
+                        <p>Login Successful</p>
+                        <button onClick={this.removeModal}>Continue</button>
+                    </div>
+                </Modal>
 				<div className='InputGroup FlexRow'>
-					<button type='submit' disabled={!this.state.formIsValid}>Register</button>
+					<button type='submit' disabled={!this.state.formIsValid}>Login</button>
 				</div>
 			</form>
 		);

@@ -16,7 +16,7 @@ class Company extends Component{
 	}
 	confirmDelete = ()=>{
 		this.removeModal();
-		this.props.deleteListingClicked();
+		this.props.deleteCompanyClicked();
 	}
 	render(){
 		return (
@@ -34,7 +34,10 @@ class Company extends Component{
 					<p>{this.props.company.companyDescription}</p>
 				</div>
 				<div className='FlexRow CompanyRight'>
-					<Modal show={this.state.showDeleteDialog} modalClosed={this.removeModal}>
+					<Modal
+						show={this.state.showDeleteDialog}
+						modalClosed={this.removeModal}
+						successfull={true}>
 						<div>
 							<p>Are You sure you want to delete?</p>
 							<button onClick={this.removeModal}>Cancel</button>

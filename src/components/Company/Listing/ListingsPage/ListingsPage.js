@@ -20,16 +20,16 @@ class ListingsPage extends Component{
     filterLists = (searchTags)=>{
     	let filtered = this.state.jobListings.filter((listing)=>{
     		let listingTags = [listing.role, listing.level, ...listing.languages, ...listing.tools];
-            
-    		return searchTags.some(searchTag => listingTags.includes(searchTag));
+            return searchTags.every(searchTag => listingTags.includes(searchTag));
     	});
-
     	this.setState({ searchTags: searchTags, filteredListings: filtered });
     }
 
     handleRectangleTagClick = (tag)=>{
     	let searchTags = [...this.state.searchTags];
-    	searchTags.push(tag);
+        if(!searchTags.includes(tag)){
+    	   searchTags.push(tag);
+        }
     	this.filterLists(searchTags);
     }
     handleRemoveSearchTagsClick = (tag)=>{
@@ -50,15 +50,9 @@ class ListingsPage extends Component{
         UserService.getListings(companyId)
                     .then(response=>{
                         let jobListings = response.data.listings;
-                            
                         if(jobListings){
-                            if(companyId){
-                                jobListings = jobListings.filter((listing)=>{
-                                    return listing.company;
-                                });
-                            }
                             jobListings.forEach((listing)=>{
-                                //listing.company.img = UserService.updateImgURL(listing.company.img);
+                                listing.company.img = UserService.updateImgURL(listing.company.img);
                             });
                         }
                            

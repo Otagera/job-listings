@@ -13,14 +13,15 @@ class UserService {
 		return axios.post('/listings', fd, { headers: AuthHeader() });
 	}
 	putListing(fakeId, listingData){
+		let headersObj = {
+			...AuthHeader(),
+			'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+		};
 		return axios({
 		        	method: 'put',
 		        	url: `/listing/${fakeId}`,
 		        	data: qs.stringify(listingData),
-		        	headers: {
-		        		'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
-		        		headers: AuthHeader()
-		        	}
+		        	headers: headersObj
 		        });
 	}
 	deleteListing(fakeId){
@@ -29,27 +30,26 @@ class UserService {
 	getCompanies(){
 		return axios.get('/companies');
 	}
-	getCompanyListings(){
-
-	}
 	getCompany(fakeId){
 		return axios.get(`/company/${fakeId}`);
 	}
 	postCompany(fd){
-		return axios.post('/companies', fd);
+		return axios.post('/companies', fd, { headers: AuthHeader() });
 	}
 	putCompany(fakeId, companyData){
+		let headersObj = {
+			...AuthHeader(),
+			'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+		};
 		return axios({
         	method: 'put',
         	url: `/company/${fakeId}`,
         	data: qs.stringify(companyData),
-        	headers: {
-        		'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
-        	}
+        	headers: headersObj
         })
 	}
 	deleteCompany(fakeId){
-		return axios.delete(`/company/${fakeId}`);
+		return axios.delete(`/company/${fakeId}`, { headers: AuthHeader() });
 	}
 	updateImgURL(img){
 		if(axios.defaults.baseURL === 'http://127.0.0.1:3001/api'){

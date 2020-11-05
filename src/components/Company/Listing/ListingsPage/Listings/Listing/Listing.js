@@ -20,7 +20,7 @@ class Listing extends Component{
 	}
 	confirmDelete = ()=>{
 		this.removeModal();
-		this.props.deleteListingClicked()
+		this.props.deleteListingClicked();
 	}
 	render(){
 		let pills = [];

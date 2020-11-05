@@ -20,20 +20,21 @@ class Listings extends Component{
 	            	});
     }
     render(){
-		let listings = this.props.availableListings.map((listing)=>{
-			return (<Listing
-						listing={listing}
-						key={listing.fakeId}
-						tagClicked={this.props.tagClicked}
-						listingClicked={()=> this.props.listingClicked(listing.fakeId)}
-						deleteListingClicked={()=> this.handleDeleteListingClicked(listing.fakeId)} />
-				);
-		});
 		let redirect = null;
-		if(this.props.availableListings.length < 0){
-			listings = <Loader />;
+		let listings = <Loader />;
+
+		if(this.props.availableListings.length > 0){
+			listings = this.props.availableListings.map((listing)=>{
+				return (<Listing
+							listing={listing}
+							key={listing.fakeId}
+							tagClicked={this.props.tagClicked}
+							listingClicked={()=> this.props.listingClicked(listing.fakeId)}
+							deleteListingClicked={()=> this.handleDeleteListingClicked(listing.fakeId)} />
+					);
+			});
 		}
-		if(this.props.error){
+		if(this.props.error || this.state.error){
 			listings = <p>Something went wrong</p>
 		}
 		if(this.state.redirect){
