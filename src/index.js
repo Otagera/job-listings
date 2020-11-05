@@ -8,7 +8,7 @@ import axios from 'axios';
 
 if(process.env.NODE_ENV === 'development'){
 	axios.defaults.baseURL = 'http://127.0.0.1:3001/api';
-}else if(process.env.NODE_ENV === 'development'){
+}else if(process.env.NODE_ENV === 'production'){
 	axios.defaults.baseURL = 'https://evening-wildwood-17350.herokuapp.com/api';
 }
 //axios.defaults.headers.common['Autorization'] = 'AUTH TOKEN';
